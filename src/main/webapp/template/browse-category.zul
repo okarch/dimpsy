@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vlayout>
+  <vbox align="center" pack="center" width="400px">
+    <html><![CDATA[
+<h2>${chartTitle}
+#if( $summary ) 
+: <i>${summary.getTerm()}</i></h2>
+    Total number of samples: <b>${summary.getSamplecount()}</b>
+#else
+</h2>
+    Number of samples cannot be determined
+#end
+]]></html>
+#if( $summary )
+  <textbox id="txtBrowseCategoryPath" visible="false"/>
+  <button id="btBrowseCategory" label="Browse samples"/>
+#end
+  </vbox>
+</vlayout>

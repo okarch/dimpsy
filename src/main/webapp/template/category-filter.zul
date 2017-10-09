@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hlayout>
+  <combobox id="cbFilterCategory_${filterNum}" autodrop="true" width="200px" mold="rounded" buttonVisible="true" />
+</hlayout>

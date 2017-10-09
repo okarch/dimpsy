@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hlayout>
+  <combobox id="cbFilterContent_${filterNum}" autodrop="true" width="100px" mold="rounded" buttonVisible="true">
+    <comboitem label="is" value="equals" />
+    <comboitem label="contains" value="contains" />
+    <comboitem label="starts with" value="starts" />
+    <comboitem label="ends with" value="ends" />
+    <comboitem label="matches" value="matches" />
+  </combobox>
+  <textbox id="txtFilterTerm_${filterNum}" width="200px"/>
+</hlayout>

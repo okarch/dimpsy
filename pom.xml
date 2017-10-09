@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.emd.dimpsy</groupId>
+	<artifactId>dimpsy</artifactId>
+<!--
+  <packaging>jar</packaging>
+-->
+  <version>1.0</version>
+  <name>dimpsy</name>
+
+  <url>http://biobank.merckgroup.com</url>
+
+  <description>
+The aim of the project is to provide a ui to the data inventory management.
+  </description>
+
+<!--
+    <groupId>org.springframework</groupId>
+    <artifactId>gs-rest-service</artifactId>
+    <version>0.1.0</version>
+-->
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.1.10.RELEASE</version>
+    </parent>
+
+    <dependencies>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <exclusions>
+          <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+        <exclusions>
+          <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-log4j</artifactId>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+        <exclusions>
+          <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-batch</artifactId>
+        <exclusions>
+          <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+<!--      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-tomcat</artifactId>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-jdbc</artifactId>
+      </dependency>-->
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <exclusions>
+          <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+          </exclusion>
+        </exclusions>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.zkoss.zk</groupId>
+        <artifactId>zkbind</artifactId>
+        <version>${zk.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.zkoss.zk</groupId>
+        <artifactId>zul</artifactId>
+        <version>${zk.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>slf4j-jdk14</artifactId>
+            <groupId>org.slf4j</groupId>
+	  </exclusion>
+	</exclusions>
+      </dependency>
+      <dependency>
+	<groupId>org.zkoss.zk</groupId>
+	<artifactId>zkplus</artifactId>
+	<version>${zk.version}</version>
+      </dependency>
+      <dependency>
+	<groupId>org.zkoss.zk</groupId>
+	<artifactId>zhtml</artifactId>
+	<version>${zk.version}</version>
+      </dependency>
+		
+      <dependency>
+	<groupId>org.zkoss.zk</groupId>
+	<artifactId>zkspring-core</artifactId>
+	<version>${zk-spring.version}</version>
+	<exclusions>
+	  <exclusion>
+	    <artifactId>servlet-api</artifactId>
+	    <groupId>javax.servlet</groupId>
+	  </exclusion>
+          <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+          </exclusion>
+	</exclusions>
+      </dependency>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-data-mongodb</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-integration</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-hornetq</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-amqp</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-websocket</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-data-rest</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-remote-shell</artifactId> -->
+<!-- 		</dependency> -->
+
+
+        <dependency>
+	  <groupId>org.zkoss.zk</groupId>
+	  <artifactId>zkex</artifactId>
+	  <version>${zk.version}</version>
+        </dependency>
+
+        <dependency>
+	  <groupId>com.emd.util</groupId>
+	  <artifactId>emdutil</artifactId>
+	  <version>1.0</version>
+        </dependency>
+        <dependency>
+	  <groupId>com.emd.zk</groupId>
+	  <artifactId>emdzk</artifactId>
+	  <version>1.0</version>
+        </dependency>
+        <dependency>
+          <groupId>com.emd.xlsutil</groupId>
+          <artifactId>xlsutil</artifactId>
+          <version>1.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-jdk14</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+        </dependency>
+        <dependency>
+	  <groupId>org.jfree</groupId>
+	  <artifactId>jfreechart</artifactId>
+	  <version>1.0.19</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.velocity</groupId>
+          <artifactId>velocity</artifactId>
+          <version>1.7</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.velocity</groupId>
+          <artifactId>velocity-tools</artifactId>
+          <version>2.0</version>
+        </dependency>
+
+      </dependencies>
+
+	<properties>
+		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+		<start-class>com.emd.dimpsy.portlet.InventoryApplication</start-class>
+		<java.version>1.7</java.version>
+		<zk.version>7.0.2-Eval</zk.version>
+		<zk-spring.version>3.2.0</zk-spring.version>
+	</properties>
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-install-plugin</artifactId>
+              <version>2.4</version>
+              <executions>
+                <execution>
+                  <id>install1</id>
+                  <phase>initialize</phase>
+                  <goals>
+                    <goal>install-file</goal>
+                  </goals>
+                  <configuration>
+                    <groupId>com.emd.util</groupId>
+                    <artifactId>emdutil</artifactId>
+                    <version>1.0</version>
+                    <packaging>jar</packaging>
+                    <file>${basedir}/../dist/lib/emdutil.jar</file>
+                  </configuration>
+                </execution>
+                <execution>
+                  <id>install2</id>
+                  <phase>initialize</phase>
+                  <goals>
+                    <goal>install-file</goal>
+                  </goals>
+                  <configuration>
+                    <groupId>com.emd.zk</groupId>
+                    <artifactId>emdzk</artifactId>
+                    <version>1.0</version>
+                    <packaging>jar</packaging>
+                    <file>${basedir}/../emdzk/dist/emdzk7.jar</file>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+		</plugins>
+	</build>
+
+    <repositories>
+<!--
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+-->
+        <repository>
+            <id>zkoss-sync</id>
+            <url>http://mavensync.zkoss.org/maven2</url>
+        </repository>
+     <repository>
+       <id>ZK PE/EE Evaluation</id>
+       <url>http://mavensync.zkoss.org/eval/</url>
+    </repository>
+  </repositories>
+
+    <pluginRepositories>
+<!--
+        <pluginRepository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </pluginRepository>
+-->
+        <pluginRepository>
+            <id>zkoss-sync</id>
+            <url>http://mavensync.zkoss.org/maven2</url>
+        </pluginRepository>
+
+     <pluginRepository>
+       <id>ZK PE/EE Evaluation</id>
+       <url>http://mavensync.zkoss.org/eval/</url>
+    </pluginRepository>
+
+    </pluginRepositories>
+
+</project>

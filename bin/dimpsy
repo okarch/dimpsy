@@ -1,0 +1,221 @@
+#!/bin/sh
+
+ENDPOINT=localhost:7777
+APIKEY=220466
+XLTOOLJAR=dimpsy-1.0.jar
+JAVA_CMD=`which java`
+
+if [ "$1" = "" -o "$1" = "-h" ]; then
+    echo
+    echo "Usage: $0 [<options>] <command>"
+    echo
+    echo "  <command>:"
+    echo
+    echo "    start                                        starts the REST endpoint"
+    echo "    stop                                         stops the REST endpoint"
+    echo
+    echo "    listtemplate [<name>]                        lists all available templates"
+    echo "    newtemplate <json-file>                      creates a new upload template by posting the given json file"
+    echo "    updatetemplate <json-file>                   updates an existing upload template by posting the given json file"
+    echo
+    echo "    upload <data-file> [<template>]              uploads a new data file"
+    echo "    apply <fileset-name> [<template>]            applies the template to the fileset"
+    echo
+    echo "    newfileset <fileset-name>                    creates a fileset"
+    echo "    listfileset [<fileset-name>]                 lists the content of the fileset"
+    echo "    addfile <fileset-name> <data-file>           uploads a data file and adds it to the fileset"
+    echo "    deletefile <fileset-name> <data-file>        deletes a data file from the fileset"
+    echo
+    echo "    output <output-id> | <md5sum> | <filename>   returns the output file identified by the id or md5sum or generated"
+    echo
+    echo "    verify                                       verifies that the service works"
+    echo
+    echo "  <options>:"
+    echo
+    echo "    -h                                           displays this help screen"
+    echo
+    exit 1
+fi
+
+initdir=`pwd`
+cd `dirname $0`
+currdir=`pwd`
+logdir=$currdir/../log
+targetdir=$currdir/../target
+cd $initdir
+
+template=
+reqMethod=GET
+reqHeader=
+command=$1
+cmdset=0
+qset=0
+pset=0
+template=default
+
+for a do
+
+  if [ "$a" = "-h" ]; then
+      echo
+      echo "Usage: $0 [<options>] <command>"
+      echo
+      echo "  <command>:"
+      echo
+      echo "    start                                        starts the REST endpoint"
+      echo "    stop                                         stops the REST endpoint"
+      echo
+      echo "    listtemplate [<name>]                        lists all available templates"
+      echo "    newtemplate <json-file>                      creates a new upload template by posting the given json file"
+      echo "    updatetemplate <json-file>                   updates an existing upload template by posting the given json file"
+      echo
+      echo "    upload <data-file> [<template>]              uploads a new data file and applies a template"
+      echo "    apply <fileset-name> [<template>]            applies the template to the fileset"
+      echo
+      echo "    newfileset <fileset-name>                    creates a fileset"
+      echo "    listfileset [<fileset-name>]                 lists the content of the fileset"
+      echo "    addfile <fileset-name> <data-file>           uploads a data file and adds it to the fileset"
+      echo "    deletefile <fileset-name> <data-file>        deletes a data file from the fileset"
+      echo
+      echo "    output <output-id> | <md5sum> | <filename>   returns the output file identified by the id or md5sum or generated"
+      echo
+      echo "    verify                                       verifies that simbiom service works"
+      echo 
+      echo "  <options>:"
+      echo
+      echo "    -h                                           displays this help screen"
+      echo
+      exit 1
+  fi
+
+  if [ $cmdset -eq 0 -a $a = "start" ]; then
+      command=$a
+      cmdset=1
+  elif [ $cmdset -eq 0 -a $a = "verify" ]; then
+      command=$a
+      cmdset=1
+  elif [ $cmdset -eq 0 -a $a = "listtemplate" ]; then
+      command=$a
+      cmdset=1
+  elif [ $cmdset -eq 0 -a $a = "newtemplate" ]; then
+      command=$a
+      reqMethod=POST
+      cmdset=1
+  elif [ $cmdset -eq 0 -a $a = "updatetemplate" ]; then
+      command=$a
+      reqMethod=POST
+      cmdset=1
+  elif [ $cmdset -eq 0 -a $a = "upload" ]; then
+      command=$a
+      reqMethod=POST
+      cmdset=1
+  elif [ $cmdset -eq 0 -a $a = "newfileset" ]; then
+     command=$a
+     cmdset=1
+  elif [ $cmdset -eq 0 -a $a = "output" ]; then
+     command=$a
+     cmdset=1
+  elif [ $pset -eq 1 ]; then
+      param3=$a
+      pset=0
+  elif [ $qset -eq 1 ]; then
+      template=$a
+      qset=0
+      pset=1
+  elif [ $cmdset -eq 1 ]; then
+      qname=$a
+      qset=1
+      cmdset=0
+  fi
+
+done
+
+if [ "$command" = "start" ]; then
+    if [ "$JDK_HOME" != "" ]; then
+	JAVA_CMD=$JDK_HOME/bin/java
+    elif [ "$JAVA_HOME" != "" ]; then
+	JAVA_CMD=$JAVA_HOME/bin/java
+    fi
+    echo "starting REST endpoint..."
+    if [ -e $targetdir/$XLTOOLJAR ]; then
+	dtStamp=`date +%Y-%m-%d_%H-%M`
+	$JAVA_CMD -jar $targetdir/$XLTOOLJAR >$logdir/dimpsy-$dtStamp.log &
+	sleep 8
+	tail $logdir/dimpsy-$dtStamp.log  
+    else
+	echo
+	echo "Error: cannot locate $targetdir/$XLTOOLJAR"
+	echo
+	exit 2
+    fi
+elif [ "$command" = "stop" ]; then
+    procid=`ps -ef | grep dimpsy | grep jar | awk '{ print $2 }'`
+    if [ "$procid" != "" ]; then
+	echo "Stopping process $procid"
+	kill $procid
+    fi
+elif [ "$command" = "listtemplate" ]; then
+    typest=""
+    if [ "$qname" != "" ]; then
+	typest="?name=$qname"
+    fi
+    curl http://$ENDPOINT/template$typest
+    echo
+elif [ "$command" = "verify" ]; then
+    vTest=`curl http://$ENDPOINT/health 2>/dev/null | grep '{"status":"UP"}'`
+    if [ "$vTest" = "" ]; then
+	exit 2
+    fi
+elif [ "$command" = "upload" ]; then
+    if [ "$qname" != "" ]; then
+	curl -X POST --form file=@$qname http://$ENDPOINT/upload/$APIKEY/$template
+	echo
+    else
+	echo
+	echo "Error: cannot read from empty file"
+	echo
+	exit 2
+    fi
+elif [ "$command" = "newtemplate" ]; then
+    if [ "$qname" != "" ]; then
+	curl -X POST --header "Content-Type: application/json" -d@$qname http://$ENDPOINT/template/$APIKEY/create
+	echo
+    else
+	echo
+	echo "Error: cannot read from empty file"
+	echo
+	exit 2
+    fi
+elif [ "$command" = "newfileset" ]; then
+    if [ "$qname" != "" ]; then
+	curl http://$ENDPOINT/fileset/$APIKEY/create/$qname
+	echo
+    else
+	echo
+	echo "Error: fileset name is missing"
+	echo
+	exit 2
+    fi
+elif [ "$command" = "updatetemplate" ]; then
+    if [ "$qname" != "" ]; then
+	curl -X POST --header "Content-Type: application/json" -d@$qname http://$ENDPOINT/template/$APIKEY/update
+	echo
+    else
+	echo
+	echo "Error: cannot read from empty file"
+	echo
+	exit 2
+    fi
+elif [ "$command" = "output" ]; then
+    if [ "$qname" != "" ]; then
+	curl http://$ENDPOINT/output/$qname
+	echo
+    else
+	echo
+	echo "Error: output id is missing"
+	echo
+	exit 2
+    fi
+fi
+
+
+

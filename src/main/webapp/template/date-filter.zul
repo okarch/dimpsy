@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hlayout>
+  <intbox id="intFilterCriteria_${filterNum}" width="100px"/>
+  <combobox id="cbFilterUnit_${filterNum}" autodrop="true" width="100px" mold="rounded" buttonVisible="true">
+    <comboitem label="days" value="days" />
+    <comboitem label="hours" value="hours" />
+    <comboitem label="months" value="months" />
+    <comboitem label="weeks" value="weeks" />
+    <comboitem label="years" value="years" />
+  </combobox>
+  <datebox id="dbEndDate_${filterNum}" width="120px" format="short" constraint="no empty, no future: Accepts dates from the past only"/>
+</hlayout>

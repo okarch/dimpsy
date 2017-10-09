@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+  
+  <simbiom config-class="com.emd.dimpsy.config.InventoryPreferences">
+
+    <!-- commands -->
+<!--
+    <command config-class="com.emd.simbiom.search.SearchSamples"
+             commandName="btSampleSearch"
+             event="onClick" />
+    <command config-class="com.emd.simbiom.search.SearchSamples"
+             commandName="btFilterApply"
+             event="onClick" />
+    <command config-class="com.emd.simbiom.search.UseFilter"
+             commandName="chkFilterUse"
+             event="onCheck" />
+    <command config-class="com.emd.simbiom.search.SelectFilterOperator"
+             commandName="cbFilterOperator_0"
+             event="onSelect" />
+-->
+    <command config-class="com.emd.dimpsy.auth.UserLogin"
+             commandName="btLogin"
+             event="onClick" />
+    <command config-class="com.emd.dimpsy.auth.UserLogin"
+             commandName="btLogout"
+             event="onClick" />
+
+    <command config-class="com.emd.dimpsy.template.OpenResultLog"
+             commandName="gbResultLog"
+             event="onOpen" 
+             numLogs="20" />
+    <command config-class="com.emd.dimpsy.template.OpenOutput"
+             commandName="gbOutputLog"
+             event="onOpen" 
+             numLogs="20" />
+    <command config-class="com.emd.dimpsy.template.SelectResultLog"
+             commandName="cbBatchSelector"
+             event="onSelect" /> 
+    <command config-class="com.emd.dimpsy.template.SelectOutput"
+             commandName="cbOutputSelector"
+             event="onSelect" /> 
+    <command config-class="com.emd.dimpsy.template.SelectOutputFile"
+             commandName="cbOutputFileSelector"
+             event="onSelect" /> 
+    <command config-class="com.emd.dimpsy.template.ExportOutput"
+             commandName="btOutputDownload"
+             formatSelector="cbOutputFormatSelector"
+             event="onClick" />
+
+    <command config-class="com.emd.dimpsy.template.LogLevelFilter"
+             commandName="chkResultError"
+             event="onCheck" />
+    <command config-class="com.emd.dimpsy.template.LogLevelFilter"
+             commandName="chkResultWarn"
+             event="onCheck" />
+    <command config-class="com.emd.dimpsy.template.LogLevelFilter"
+             commandName="chkResultInfo"
+             event="onCheck" />
+
+    <command config-class="com.emd.dimpsy.template.UploadDataset"
+             commandName="btSampleUpload"
+             event="onUpload" />
+
+    <command config-class="com.emd.dimpsy.template.EditTemplate"
+             commandName="btTemplateNew"
+             event="onClick" />
+    <command config-class="com.emd.dimpsy.template.EditTemplate"
+             commandName="btTemplateCopy"
+             event="onClick" />
+    <command config-class="com.emd.dimpsy.template.EditTemplate"
+             commandName="btTemplateSave"
+             event="onClick" />
+    <command config-class="com.emd.dimpsy.template.EditTemplate"
+             commandName="btTemplateDelete"
+             event="onClick" />
+    <command config-class="com.emd.dimpsy.template.EditTemplate"
+             commandName="btTemplateRename"
+             event="onClick" />
+
+<!--
+    <command config-class="com.emd.simbiom.search.FilterRemove"
+             commandName="btFilterRemove_0"
+             event="onClick" />
+
+    <command config-class="com.emd.simbiom.category.CategorySelect"
+             commandName="cbCategory"
+             event="onSelect" /> 
+
+    <command config-class="com.emd.simbiom.view.SwitchTab"
+             commandName="tbBrowser"
+             event="onSelect" /> 
+
+    <command config-class="com.emd.simbiom.cost.AmountChange"
+             commandName="intCostCount_0"
+             event="onChanging" /> 
+
+    <command config-class="com.emd.simbiom.cost.UpdateEstimate"
+             commandName="btCostUpdate"
+             event="onClick" />
+
+    <command config-class="com.emd.simbiom.cost.AddSampleItem"
+             commandName="btCostAdd_0"
+             event="onClick" />
+
+    <command config-class="com.emd.simbiom.cost.RemoveSampleItem"
+             commandName="btCostRemove_0"
+             event="onClick" />
+-->
+<!--
+    <result config-class="com.emd.simbiom.search.FilterModel"
+            modelName="cbFilterSelector_0">
+
+      <filter config-class="com.emd.simbiom.search.AgeFilter"
+              label="Sample import newer than"
+              parent="hlFilter_0"
+              initValue="90"
+              initUnit="days"
+              message="${cbFilterSelector_0} ${intFilterCriteria_0} ${cbFilterUnit_0}" 
+              template="/template/date-filter.zul">
+
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="cbFilterUnit_0"
+                event="onSelect" />
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="intFilterCriteria_0"
+                event="onChanging" />
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="dbEndDate_0"
+                event="onChange" />
+
+      </filter>
+
+      <filter config-class="com.emd.simbiom.search.AgeFilter"
+              label="Sample import older than"
+              parent="hlFilter_0"
+              initValue="90"
+              initUnit="days"
+              message="${cbFilterSelector_0} ${intFilterCriteria_0} ${cbFilterUnit_0}" 
+              template="/template/date-filter.zul">
+
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="cbFilterUnit_0"
+                event="onSelect" />
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="intFilterCriteria_0"
+                event="onChanging" />
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="dbEndDate_0"
+                event="onChange" />
+
+      </filter>
+
+      <filter config-class="com.emd.simbiom.search.AgeFilter"
+              label="Collection date older than"
+              parent="hlFilter_0"
+              initValue="90"
+              initUnit="days"
+              message="${cbFilterSelector_0} ${intFilterCriteria_0} ${cbFilterUnit_0}" 
+              template="/template/date-filter.zul">
+
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="cbFilterUnit_0"
+                event="onSelect" />
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="intFilterCriteria_0"
+                event="onChanging" />
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="dbEndDate_0"
+                event="onChange" />
+
+      </filter>
+
+      <filter config-class="com.emd.simbiom.search.AgeFilter"
+              label="Collection date newer than"
+              parent="hlFilter_0"
+              initValue="90"
+              initUnit="days"
+              message="${cbFilterSelector_0} ${intFilterCriteria_0} ${cbFilterUnit_0}" 
+              template="/template/date-filter.zul">
+
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="cbFilterUnit_0"
+                event="onSelect" />
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="intFilterCriteria_0"
+                event="onChanging" />
+        <action config-class="com.emd.simbiom.search.AgeInputChange"
+                component="dbEndDate_0"
+                event="onChange" />
+
+      </filter>
+
+      <filter config-class="com.emd.simbiom.search.CategoryFilter"
+              label="Study is"
+              parent="hlFilter_0"
+              initValue=""
+              category="study"
+              message="${cbFilterSelector_0} ${cbFilterCategory_0}" 
+              template="/template/category-filter.zul" />
+
+      <filter config-class="com.emd.simbiom.search.CategoryFilter"
+              label="Sample type is"
+              parent="hlFilter_0"
+              initValue=""
+              category="sampletype"
+              message="${cbFilterSelector_0} ${cbFilterCategory_0}" 
+              template="/template/category-filter.zul" />
+
+      <filter config-class="com.emd.simbiom.search.TextFilter"
+              label="Any content"
+              parent="hlFilter_0"
+              initValue=""
+              initContentOperator="contains"
+              message="${cbFilterSelector_0} ${cbFilterContent_0} ${txtFilterTerm_0}" 
+              template="/template/text-filter.zul">
+
+        <action config-class="com.emd.simbiom.search.ContentOperatorChange"
+                component="cbFilterContent_0"
+                event="onAfterRender" />
+        <action config-class="com.emd.simbiom.search.ContentOperatorChange"
+                component="cbFilterContent_0"
+                event="onSelect" />
+
+      </filter>
+
+      <filter config-class="com.emd.simbiom.search.SearchFilter"
+              label="No filter"
+              parent="hlFilter_0"
+              template="/template/no-filter.zul">
+      </filter>
+
+    </result>
+-->
+
+<!--
+    <result config-class="com.emd.simbiom.search.SampleResult"
+            modelName="grSearchResult" />
+-->
+
+    <result config-class="com.emd.dimpsy.template.TemplateModel"
+            modelName="cbTemplate"
+            paramRowId="vlParameters"
+            messageRowId="rowMessageUpload" />
+
+    <result config-class="com.emd.dimpsy.template.UploadSelector"
+            modelName="cbBatchSelector"
+            messageRowId="rowMessageUpload" />
+
+    <result config-class="com.emd.dimpsy.template.ResultLog"
+            modelName="grResultLog"
+            messageRowId="rowMessageUpload" />
+
+    <result config-class="com.emd.dimpsy.template.OutputSelector"
+            modelName="cbOutputSelector"
+            messageRowId="rowMessageUpload" />
+    <result config-class="com.emd.dimpsy.template.OutputFileSelector"
+            modelName="cbOutputFileSelector"
+            messageRowId="rowMessageUpload" />
+
+<!--
+    <result config-class="com.emd.simbiom.category.CategorySelector"
+            modelName="cbCategory"
+            messageRowId="rowMessageOverview" />
+-->
+
+<!--
+    <result config-class="com.emd.simbiom.category.CategoryTreeView"
+            modelName="trCategory"
+            messageRowId="rowMessageOverview">
+
+      <category config-class="com.emd.simbiom.category.CategoryView"
+                label="No category"
+                parent="vlCategoryView"
+                template="/template/default-category.zul"/>
+
+      <category config-class="com.emd.simbiom.category.BrowseCategoryView"
+                label="term_Molecules"
+                parent="vlCategoryView"
+                template="/template/browse-category.zul">
+
+        <action config-class="com.emd.simbiom.category.BrowseSamples"
+                component="btBrowseCategory"
+                event="onClick" />
+      </category>
+
+      <category config-class="com.emd.simbiom.category.ChartCategoryView"
+                label="Molecules.Studies"
+                engine="com.emd.simbiom.view.BarChartEngine"
+                parent="vlCategoryView"
+                template="/template/barchart-category.zul">
+        <action config-class="com.emd.simbiom.category.BrowseSamples"
+                component="chrtCategory"
+                event="onClick" />
+      </category>
+
+      <category config-class="com.emd.simbiom.category.BrowseCategoryView"
+                label="term_Molecules.Studies"
+                parent="vlCategoryView"
+                template="/template/browse-category.zul">
+
+        <action config-class="com.emd.simbiom.category.BrowseSamples"
+                component="btBrowseCategory"
+                event="onClick" />
+      </category>
+
+      <category config-class="com.emd.simbiom.category.ChartCategoryView"
+                label="Molecules.Sample_types"
+                engine="com.emd.simbiom.view.BarChartEngine"
+                parent="vlCategoryView"
+                template="/template/barchart-category.zul">
+        <action config-class="com.emd.simbiom.category.BrowseSamples"
+                component="chrtCategory"
+                event="onClick" />
+      </category>
+
+      <category config-class="com.emd.simbiom.category.BrowseCategoryView"
+                label="term_Molecules.Sample_types"
+                parent="vlCategoryView"
+                template="/template/browse-category.zul">
+        <action config-class="com.emd.simbiom.category.BrowseSamples"
+                component="btBrowseCategory"
+                event="onClick" />
+      </category>
+
+      <category config-class="com.emd.simbiom.category.ChartCategoryView"
+                label="Molecules.Studies.Sample_types"
+                engine="com.emd.simbiom.view.BarChartEngine"
+                parent="vlCategoryView"
+                template="/template/barchart-category.zul">
+        <action config-class="com.emd.simbiom.category.BrowseSamples"
+                component="chrtCategory"
+                event="onClick" />
+      </category>
+
+      <category config-class="com.emd.simbiom.category.BrowseCategoryView"
+                label="term_Molecules.Locations"
+                parent="vlCategoryView"
+                template="/template/browse-category.zul">
+        <action config-class="com.emd.simbiom.category.BrowseLogisticsSamples"
+                component="btBrowseCategory"
+                event="onClick" />
+      </category>
+
+      <category config-class="com.emd.simbiom.category.ChartCategoryView"
+                label="Molecules.Locations"
+                engine="com.emd.simbiom.view.BarChartEngine"
+                parent="vlCategoryView"
+                template="/template/barchart-category.zul">
+        <action config-class="com.emd.simbiom.category.BrowseLogisticsSamples"
+                component="chrtCategory"
+                event="onClick" />
+      </category>
+
+    </result>
+-->
+
+    <inventory config-class="com.emd.xlsutil.dao.DatasetDAO"
+              url="jdbc:mysql://localhost/dataset"
+              driver="com.mysql.jdbc.Driver"
+              username="dataset"
+              password="dataset"
+              schema="dataset"
+              template="dataset-mysql.properties">
+<!--
+      <contentSearch config-class="com.emd.simbiom.dao.FullContentSearch"
+                     url="http://localhost:7272/solr/biobank" />
+-->
+
+    </inventory>
+
+  </simbiom>
+
+</config>

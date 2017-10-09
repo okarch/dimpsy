@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vlayout>
+  <vbox width="700px">
+    <label value="No category view available"/>
+  </vbox>
+</vlayout>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page id="viewPage" title="Dataset Inventory Manipulator" cacheable="false" language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"  
+    xmlns:zk="http://www.zkoss.org/2005/zk">  
+
+  <style>
+     .inputHelp {
+       color: #1469AB;
+       font-weight: bold;
+     }
+  </style>
+
+<window id="wndBrowser" border="none" mode="embedded" apply="com.emd.dimpsy.portlet.InventoryPortletController">
+
+  <zscript><![CDATA[
+  ]]></zscript>
+
+  <tabbox id="tbBrowser" width="100%">
+
+    <tabs>
+      <tab label="Login" />
+      <tab id="tbUpload" label="Upload" disabled="true" />
+      <tab label="Browse" />
+    </tabs>
+
+    <tabpanels>
+
+      <tabpanel id="pnLogin">
+
+        <grid id="grLogin" fixedLayout="true" span="true">
+          <columns>
+	    <column width="20%" />
+	    <column width="80%" />
+          </columns>
+
+          <rows>
+
+            <row>
+              <cell style="text-align:left">
+	        <label value="User"/>
+              </cell>
+	      <textbox id="txtLoginUser"/>
+            </row>
+
+            <row>
+              <cell style="text-align:left">
+	        <label value="Password or API key"/>
+              </cell>
+	      <textbox id="txtLoginPassword" type="password"/>
+            </row>
+
+            <row>
+              <cell style="text-align:left">
+	        <label value="Remember me"/>
+              </cell>
+              <checkbox id="chkLoginRember" checked="true" />
+            </row>
+
+            <row id="rowMessageLogin"/>
+
+            <row>
+              <cell style="text-align:left"/>
+              <hlayout>
+                <button id="btLogin" label="Login"/>
+                <button id="btLogout" label="Logout"/>
+              </hlayout>
+	    </row>
+
+	  </rows>
+	</grid>
+
+      </tabpanel>
+
+      <tabpanel id="pnUpload">
+
+        <grid id="grUpload" fixedLayout="true" span="true">
+          <columns>
+	    <column hflex="min" />
+	    <column hflex="min" />
+          </columns>
+
+          <rows>
+
+            <row>
+              <cell style="text-align:left">
+	        <label value="Current user"/>
+              </cell>
+	      <label id="lbCurrentUser" style="font-weight: bold;"/>
+            </row>
+
+            <row>
+              <cell style="text-align:left">
+	        <label value="Template"/>
+              </cell>
+              <combobox id="cbTemplate" autodrop="true" width="200px" mold="rounded" buttonVisible="true"/>
+            </row>
+
+            <row>
+              <cell style="text-align:left">
+	        <label value="File"/>
+              </cell>
+              <button id="btSampleUpload" label="Upload file" upload="true,maxsize=-1"/>
+            </row>
+
+            <row>
+              <cell style="text-align:left">
+	        <label value="Parameters"/>
+              </cell>
+              <vlayout id="vlParameters"/>
+	    </row>
+
+            <row id="rowMessageUpload"/>
+
+            <row>
+              <cell colspan="2">
+                <groupbox id="gbTemplate" mold="3d" open="false">
+                    <caption image="/images/edit-icon.png" label="Template view" />                  
+		    <vlayout>
+                      <hlayout>
+			<label value="Template name"/>
+			<textbox id="txtTemplateName"/>
+    			<button id="btTemplateRename" label="Rename"/>
+    			<button id="btTemplateDelete" label="Delete"/>
+		      </hlayout>
+		      <textbox id="txtTemplate" rows="20" cols="140"/>
+		      <hlayout>
+    			<button id="btTemplateNew" label="New"/>
+    			<button id="btTemplateCopy" label="Copy"/>
+    			<button id="btTemplateSave" label="Save"/>
+    			<button id="btTemplateUpload" label="Upload template" upload="true,maxsize=-1"/>
+		      </hlayout>
+                    </vlayout>
+                </groupbox>
+	      </cell>
+	    </row>
+
+            <row>
+              <cell colspan="2">
+                <groupbox id="gbOutputLog" mold="3d" open="false">
+                    <caption image="/images/Document-16.png" label="Output" />                  
+		    <vlayout>
+                      <hlayout>
+                        <combobox id="cbOutputSelector" autodrop="true" width="400px" mold="rounded" buttonVisible="true"/>		      
+			<label value="Output"/>
+                        <combobox id="cbOutputFileSelector" autodrop="true" width="250px" mold="rounded" buttonVisible="true"/>		      
+		      </hlayout>
+		      <textbox id="txtOutput" rows="20" cols="140"/>
+                      <hlayout>
+			<label value="Format"/>
+                        <combobox id="cbOutputFormatSelector" autodrop="true" width="150px" mold="rounded" buttonVisible="true">
+                          <attribute name="onCreate">self.setSelectedIndex(0);</attribute>
+                          <comboitem label="Original file" value="original" />
+                          <comboitem label="Compressed file" value="zipped" />
+                          <comboitem label="All files compressed" value="all-zipped" />
+                          <comboitem label="PDF file" value="pdf" />
+                        </combobox>
+                        <button id="btOutputDownload" label="Download"/>
+		      </hlayout>
+                    </vlayout>
+                </groupbox>
+	      </cell>
+	    </row>
+
+            <row>
+              <cell colspan="2">
+                <groupbox id="gbResultLog" mold="3d" open="false">
+                    <caption image="/images/status.png" label="Message log" />                  
+                    <grid id="grResultLog" fixedLayout="true" span="true" mold="paging" pageSize="20">
+                      <auxhead>
+                        <auxheader colspan="4">
+                          <combobox id="cbBatchSelector" autodrop="true" width="400px" mold="rounded" buttonVisible="true"/>		      
+                          <checkbox id="chkResultError" label="Show errors" checked="true" />
+                          <checkbox id="chkResultWarn" label="Show warnings" checked="true" />
+                          <checkbox id="chkResultInfo" label="Show remarks" checked="false" />
+                        </auxheader>
+                      </auxhead> 
+                      <columns id="colsUploadMessage" menupopup="auto" sizable="true">
+                        <column id="colLogstamp" label="Event time" hflex="min"/>
+                        <column id="colLevel" label="Level" hflex="min"/>
+                        <column id="colLine" label="Line" hflex="min"/>
+                        <column id="colMessage" label="Message"/>
+                      </columns>
+                    </grid>
+                </groupbox>
+	      </cell>
+	    </row>
+	  </rows>
+	</grid>
+
+      </tabpanel>
+
+      <tabpanel id="pnBrowse">
+
+        <grid id="grSearch" fixedLayout="true" style="overflow: hidden;" >
+          <columns>
+	    <column width="20%" />
+	    <column width="80%" />
+          </columns>
+
+          <rows>
+
+            <row>
+              <cell style="text-align:left">
+	        <label value="Search"/>
+              </cell>
+              <hlayout>
+	        <textbox id="txtSampleSearch" width="200px"/>
+	        <button id="btSampleSearch" label="Go"/>
+                <checkbox id="chkFilterUse" label=" Use filter" checked="true"/>                  
+	      </hlayout>
+            </row>
+
+            <row id="rowFilter">
+              <cell style="text-align:left">
+	        <label value="Filter"/>
+              </cell>
+              <grid id="grFilter" sizedByContent="true" style="overflow: hidden;">
+<!--
+              <grid id="grFilter" fixedLayout="true" span="true">
+-->
+                <columns>
+                  <column hflex="min" />
+	          <column hflex="min" />
+	          <column hflex="min" />
+                </columns>
+                <rows id="rowsFilter">
+                  <row id="rowFilter_0">
+                    <hlayout>
+                      <combobox id="cbFilterSelector_0" autodrop="true" width="200px" mold="rounded" buttonVisible="true"/>
+                      <button id="btFilterRemove_0" disabled="true" image="/images/delete-icon.png" />
+                    </hlayout>
+                    <hlayout id="hlFilter_0"/>
+                    <combobox id="cbFilterOperator_0" autodrop="true" width="100px" mold="rounded" buttonVisible="true">
+                      <comboitem label="" value="and" />
+                      <comboitem label="And" value="and" />
+                      <comboitem label="Or" value="or" />
+                      <comboitem label="But not" value="but not" />
+                    </combobox>
+                  </row>
+                  <row id="rowFilterActions">
+
+<!--
+                      <cell style="text-align:left">
+                        <button id="btFilterApply" label="Apply"/>
+		      </cell>
+-->
+                      <hlayout style="text-align:left">
+                        <button id="btFilterApply" label="Apply"/>
+                        <button id="btFilterReset" label="Reset"/>
+		      </hlayout>
+                      <hlayout style="text-align:left">
+                        <textbox id="txtFilterSave" width="150px"/>
+                        <button id="btFilterSave" label="${labels.filter.save}"/>
+		      </hlayout>
+<!--
+                      <cell style="text-align:left">
+                        <button id="btFilterReset" label="Reset"/>
+		      </cell>
+                      <cell style="text-align:center">
+                        <button id="btFilterApply" label="Apply"/>
+		      </cell>
+                      <hlayout style="text-align:center">
+                        <textbox id="txtFilterSave" width="150px"/>
+                        <button id="btFilterSave" label="${labels.filter.save}"/>
+		      </hlayout>
+                      <cell style="text-align:center">
+                        <button id="btFilterReset" label="Reset"/>
+		      </cell>
+-->
+                  </row>
+                </rows>
+              </grid>
+            </row>
+
+            <row id="rowMessage"/>
+
+            <row>
+              <cell colspan="2">
+<!--
+                <groupbox id="gbSearchResult" mold="3d" open="false">
+                    <caption image="/images/status.png" label="Message log" />                  
+-->
+	        <grid id="grSearchResult" fixedLayout="true" span="true" mold="paging" pageSize="20">
+                  <auxhead>
+                    <auxheader colspan="2">
+                        <menubar autodrop="true">
+                          <menu label="Selection">
+                            <menupopup>
+                              <menuitem label="Select all" image="/images/select-all-24.png"/>
+                              <menuitem label="Deselect all"/>
+                              <menuitem label="Invert" image="/images/invert-selection-26.png"/>
+                            </menupopup>
+                          </menu>
+                          <menu label="Export">
+                            <menupopup>
+                              <menuitem label="Excel" image="/images/excel-24.png"/>
+                              <menuitem label="PDF" image="/images/pdf2-24.png"/>
+                              <menuitem label="Text" image="/images/TXT-26.png"/>
+                              <menuitem label="SDTM Biospecimen Event" image="/images/cdisc.png"/>
+                            </menupopup>
+                          </menu>
+                        </menubar>
+                    </auxheader>
+                    <auxheader colspan="6">		      
+	              <textbox id="txtResultStore" width="200px"/>
+                      <button id="btStoreResult" label="Strore result"/>
+                      <combobox id="cbResultSelector" autodrop="true" width="200px" mold="rounded" buttonVisible="true"/>		      
+                      <button id="btLoadResult" label="Load result"/>
+                    </auxheader>
+                  </auxhead> 
+                  <columns id="colsSearchResult" menupopup="auto" sizable="true">
+                    <column width="30px"/>
+                    <column id="colStudy" label="Study"/>
+                    <column id="colSampleType" label="Type"/>
+                    <column id="colSampleId" label="Accession"/>
+                    <column id="colSubject" label="Subject"/>
+                    <column id="colVisit" label="Visit"/>
+                    <column id="colCollection" label="Collected"/>
+                    <column id="colImport" label="Imported"/>
+                  </columns>
+                </grid>
+<!--
+		</groupbox>
+-->
+	      </cell>
+	    </row>
+
+	  </rows>
+	</grid>
+
+      </tabpanel>
+
+
+    </tabpanels>
+  </tabbox>
+
+</window>
+</zk>
+
